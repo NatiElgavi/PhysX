@@ -67,6 +67,8 @@ PxPvd*                  gPvd			= NULL;
 #if USE_REDUCED_COORDINATE_ARTICULATION
 	PxArticulationReducedCoordinate*		gArticulation = NULL;
 	PxArticulationJointReducedCoordinate*	gDriveJoint = NULL;
+	PxRigidDynamic*							gPullingActor = NULL;
+
 #else
 	PxArticulation*							gArticulation	= NULL;
 #endif
@@ -430,6 +432,8 @@ void createLongChain()
 		parent = link;
 	}
 
+	PxArticulationLink* boxLink = NULL;
+
 	//Attach large & heavy box at the end of the rope
 	{
 		const float boxMass = 50.0f;
@@ -440,6 +444,7 @@ void createLongChain()
 		pos.x += (radius + halfHeight) + boxSize;
 
 		PxArticulationLink* link = gArticulation->createLink(parent, PxTransform(pos));
+		boxLink = link;
 
 		link->setLinearDamping(0.1f);
 		link->setAngularDamping(0.1f);
@@ -486,6 +491,29 @@ void createLongChain()
 		PxRigidStatic* obstacle = PxCreateStatic(*gPhysics, PxTransform(initPos + PxVec3(10.0f, -3.0f, 0.0f)), *boxShape);
 		gScene->addActor(*obstacle);
 	}
+
+	// Create a kinematic pulling actor and connect the box link to it using a D6 joint
+	{
+		gPullingActor = PxCreateDynamic(*gPhysics, PxTransform(initPos + PxVec3(10.0f, 4.0f, 0.0f)), PxSphereGeometry(0.2f), *gMaterial, 10.0f);
+		gPullingActor->setRigidBodyFlags(PxRigidBodyFlag::eKINEMATIC);
+		gScene->addActor(*gPullingActor);
+
+		PxD6Joint* d6Joint = PxD6JointCreate(*gPhysics, gPullingActor, PxTransform(PxVec3(1.0f)), boxLink, PxTransform(PxVec3(0.0f)));
+		d6Joint->setMotion(PxD6Axis::eSWING1, PxD6Motion::eFREE);
+		d6Joint->setMotion(PxD6Axis::eSWING2, PxD6Motion::eFREE);
+		d6Joint->setMotion(PxD6Axis::eTWIST, PxD6Motion::eFREE);
+		d6Joint->setMotion(PxD6Axis::eX, PxD6Motion::eFREE);
+		d6Joint->setMotion(PxD6Axis::eY, PxD6Motion::eFREE);
+		d6Joint->setMotion(PxD6Axis::eZ, PxD6Motion::eFREE);
+
+		d6Joint->setDrive(PxD6Drive::eX, PxD6JointDrive(100, 10, 1000));
+		d6Joint->setDrive(PxD6Drive::eY, PxD6JointDrive(100, 10, 1000));
+		d6Joint->setDrive(PxD6Drive::eZ, PxD6JointDrive(100, 10, 1000));
+		d6Joint->setDrive(PxD6Drive::eSWING, PxD6JointDrive(100, 10, 1000));
+		d6Joint->setDrive(PxD6Drive::eTWIST, PxD6JointDrive(100, 10, 1000));
+		d6Joint->setDrive(PxD6Drive::eSLERP, PxD6JointDrive(100, 10, 1000));
+	}
+
 }
 
 
