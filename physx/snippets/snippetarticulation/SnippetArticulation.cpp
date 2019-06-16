@@ -506,12 +506,12 @@ void createLongChain()
 		d6Joint->setMotion(PxD6Axis::eY, PxD6Motion::eFREE);
 		d6Joint->setMotion(PxD6Axis::eZ, PxD6Motion::eFREE);
 
-		d6Joint->setDrive(PxD6Drive::eX, PxD6JointDrive(100, 10, 1000));
-		d6Joint->setDrive(PxD6Drive::eY, PxD6JointDrive(100, 10, 1000));
-		d6Joint->setDrive(PxD6Drive::eZ, PxD6JointDrive(100, 10, 1000));
-		d6Joint->setDrive(PxD6Drive::eSWING, PxD6JointDrive(100, 10, 1000));
-		d6Joint->setDrive(PxD6Drive::eTWIST, PxD6JointDrive(100, 10, 1000));
-		d6Joint->setDrive(PxD6Drive::eSLERP, PxD6JointDrive(100, 10, 1000));
+		d6Joint->setDrive(PxD6Drive::eX, PxD6JointDrive(200, 10, 1000));
+		d6Joint->setDrive(PxD6Drive::eY, PxD6JointDrive(200, 10, 1000));
+		d6Joint->setDrive(PxD6Drive::eZ, PxD6JointDrive(200, 10, 1000));
+		d6Joint->setDrive(PxD6Drive::eSWING, PxD6JointDrive(200, 10, 1000));
+		d6Joint->setDrive(PxD6Drive::eTWIST, PxD6JointDrive(200, 10, 1000));
+		d6Joint->setDrive(PxD6Drive::eSLERP, PxD6JointDrive(200, 10, 1000));
 	}
 
 }
