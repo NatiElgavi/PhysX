@@ -41,7 +41,7 @@
 #include "../snippetcommon/SnippetPVD.h"
 
 #define USE_REDUCED_COORDINATE_ARTICULATION 1
-#define CREATE_SCISSOR_LIFT 1
+#define CREATE_SCISSOR_LIFT 0
 
 #if CREATE_SCISSOR_LIFT
 	bool gCreateLiftScene = true;
