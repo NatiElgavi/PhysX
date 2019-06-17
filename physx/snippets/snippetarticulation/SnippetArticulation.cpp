@@ -410,6 +410,10 @@ void createLongChain()
 			rcJoint->setMotion(PxArticulationAxis::eSWING2, PxArticulationMotion::eFREE);
 			rcJoint->setMotion(PxArticulationAxis::eSWING1, PxArticulationMotion::eFREE);
 			rcJoint->setMotion(PxArticulationAxis::eTWIST, PxArticulationMotion::eFREE);
+			rcJoint->setDrive(PxArticulationAxis::eSWING2, 0, 1000, 10000);
+			rcJoint->setDrive(PxArticulationAxis::eSWING1, 0, 1000, 10000);
+			rcJoint->setDrive(PxArticulationAxis::eTWIST, 0, 1000, 10000);
+
 			rcJoint->setFrictionCoefficient(1.f);
 			rcJoint->setMaxJointVelocity(1000000.f);
 #endif
@@ -461,6 +465,10 @@ void createLongChain()
 		rcJoint->setMotion(PxArticulationAxis::eSWING2, PxArticulationMotion::eFREE);
 		rcJoint->setMotion(PxArticulationAxis::eSWING1, PxArticulationMotion::eFREE);
 		rcJoint->setMotion(PxArticulationAxis::eTWIST, PxArticulationMotion::eFREE);
+		rcJoint->setDrive(PxArticulationAxis::eSWING2, 0, 1000, 10000);
+		rcJoint->setDrive(PxArticulationAxis::eSWING1, 0, 1000, 10000);
+		rcJoint->setDrive(PxArticulationAxis::eTWIST, 0, 1000, 10000);
+
 		rcJoint->setFrictionCoefficient(1.f);
 		rcJoint->setMaxJointVelocity(1000000.f);
 #endif
